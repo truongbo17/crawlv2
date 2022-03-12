@@ -1,16 +1,16 @@
 <?php
 
-return array(
+return [
 
     /*
     |--------------------------------------------------------------------------
     | Upload dir
     |--------------------------------------------------------------------------
     |
-    | The dir where to store the images (relative from public)
+    | The dir where to store the images (relative from public).
     |
     */
-    'dir' => ['uploads'],
+    'dir' => ['storage/uploads'],
 
     /*
     |--------------------------------------------------------------------------
@@ -25,8 +25,7 @@ return array(
     |        'alias' => 'Local storage',
     |    ]
     */
-    'disks' => [
-
+    'disks' => [// 'uploads',
     ],
 
     /*
@@ -38,9 +37,7 @@ return array(
     |
     */
 
-    'route' => [
-        'prefix' => 'elfinder',
-        'middleware' => array(), //Set to null to disable middleware filter
+    'route' => ['prefix' => config('backpack.base.route_prefix', 'admin') . '/elfinder', 'middleware' => ['web', config('backpack.base.middleware_key', 'admin')], //Set to null to disable middleware filter
     ],
 
     /*
@@ -76,17 +73,6 @@ return array(
     |
     */
 
-    'options' => array(),
+    'options' => [],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Root Options
-    |--------------------------------------------------------------------------
-    |
-    | These options are merged, together with every root by default.
-    | See https://github.com/Studio-42/elFinder/wiki/Connector-configuration-options-2.1#root-options
-    |
-    */
-    'root_options' => array(),
-
-);
+];

@@ -6,6 +6,7 @@ use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Enum\DataStatus;
 use App\Crawler\Sites\SiteInterface;
 use App\Crawler\Sites\SiteManager;
+use App\Crawler\Storage\StorageFile;
 use GuzzleHttp\Psr7\Uri;
 use Psr\Http\Message\UriInterface;
 
@@ -115,6 +116,12 @@ class CrawlUrl
         }
 
         return $data;
+    }
+
+    public function saveDataInFile(array $data)
+    {
+        $storageFile = StorageFile::create('data');
+        $storageFile->put($data);
     }
 
     public static function hashUrl(string $url, string $algo = 'sha256'): string

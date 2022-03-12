@@ -57,6 +57,7 @@ class Crawler
 
                 if ($site->shouldGetData($crawl_url->url)) {
                     $data = $site->getInfoFromCrawler($dom_crawler, $crawl_url->url); //get data
+                    $crawl_url->saveDataInFile($data); //save data in file storage
                     $crawl_url->setData($data); //set data
                     dump($crawl_url->getData());
                 }

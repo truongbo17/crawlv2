@@ -33,12 +33,14 @@ class StorageFile implements StorageInterface
         } else {
             $this->append($data);
         }
+
+        return ['disk' => self::$disk, 'path' => self::$fileName];
     }
 
     public function init($data)
     {
         self::$fileName = $this->createName();
-        $data = ['data' => $data];
+        $data = [$data];
         Storage::disk(self::$disk)->put(self::$fileName, json_encode($data));
     }
 
@@ -53,10 +55,8 @@ class StorageFile implements StorageInterface
         $string = Storage::disk(self::$disk)->get(self::$fileName);
         $allData = json_decode($string, true);
 
-        $oldData = $allData['data'];
-        array_push($oldData, $data[0]);
+        array_push($allData, $data);
 
-        dump($oldData);
-//        Storage::disk(self::$disk)->put(self::$fileName, json_encode($data));
+        Storage::disk(self::$disk)->put(self::$fileName, json_encode($allData));
     }
 }

@@ -114,6 +114,6 @@ class CrawlUrl
     public function saveDataInFile(array $data)
     {
         $storageFile = StorageFile::create('data');
-        $storageFile->put($data);
+        return $storageFile->put($data);
     }
 }

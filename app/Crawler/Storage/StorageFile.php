@@ -2,18 +2,18 @@
 
 namespace App\Crawler\Storage;
 
-use Excel;
-use App\Exports\DataExport;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 class StorageFile implements StorageInterface
 {
     private static object|null $storageFile = null;
-    private string $disk;
+    private static string $disk;
+    private static string|null $fileName = null;
 
     public function __construct(string $disk)
     {
-        $this->disk = $disk;
+        self::$disk = $disk;
     }
 
     public static function create(string $disk): object
@@ -26,20 +26,37 @@ class StorageFile implements StorageInterface
         return self::$storageFile;
     }
 
-    public function put(array $data = null)
+    public function put(array $data)
     {
-        $data = [$data];
-        $exportData = new DataExport($data);
-
-        $array_key = array_keys($data[0]);
-        $exportData->setArrayKey($array_key);
-
-        Excel::store($exportData, $this->createName(), 'data');
+        if (self::$fileName === null) {
+            $this->init($data);
+        } else {
+            $this->append($data);
+        }
     }
 
-    public function createName()
+    public function init($data)
+    {
+        self::$fileName = $this->createName();
+        $data = ['data' => $data];
+        Storage::disk(self::$disk)->put(self::$fileName, json_encode($data));
+    }
+
+    public function createName(): string
     {
         $time = Carbon::now();
-        return 'data-' . $time->format('d-m-y-H:i:s') . '.xlsx';
+        return 'data-' . $time->format('d-m-y-H:i:s') . '.json';
+    }
+
+    public function append($data)
+    {
+        $string = Storage::disk(self::$disk)->get(self::$fileName);
+        $allData = json_decode($string, true);
+
+        $oldData = $allData['data'];
+        array_push($oldData, $data[0]);
+
+        dump($oldData);
+//        Storage::disk(self::$disk)->put(self::$fileName, json_encode($data));
     }
 }

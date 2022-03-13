@@ -57,14 +57,15 @@ class Crawler
 
                 if ($site->shouldGetData($crawl_url->url)) {
                     $data = $site->getInfoFromCrawler($dom_crawler, $crawl_url->url); //get data
-                    $crawl_url->saveDataInFile($data); //save data in file storage
-                    $crawl_url->setData($data); //set data
-                    dump($crawl_url->getData());
+                    $data_file = $crawl_url->saveDataInFile($data); //save data in file storage
+                    $crawl_url->setDataFile($data); //set data
+                    dump($crawl_url->getDataFile());
                 }
                 $crawl_url->setStatus(CrawlStatus::DONE); //set status for instance
                 $this->queue->changeProcessStatus($crawl_url, $crawl_url->getStatus()); //set status in database
 
                 $urls = $this->getAllUrl($site, $dom_crawler); //get all url of dom url current
+
                 foreach ($urls as $url) {
                     if (!$site->shouldCrawl($url)) {
                         continue;

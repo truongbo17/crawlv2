@@ -27,7 +27,7 @@ class MySqlQueue implements QueueInterface
         }
 
         $data = $crawlUrl->toArray();
-        $data['data'] = json_encode($data['data']);
+        $data['data_file'] = json_encode($data['data_file']);
 
         $inserted = DB::table($this->table)->insertGetId($data);
 
@@ -98,7 +98,7 @@ class MySqlQueue implements QueueInterface
 
         if ($data['status'] == CrawlStatus::DONE) {
             $data['data_status'] = $crawlUrl->getDataStatus();
-            $data['data'] = json_encode($crawlUrl->getData());
+            $data['data_file'] = json_encode($crawlUrl->getDataFile());
         }
 
         DB::table($this->table)

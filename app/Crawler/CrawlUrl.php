@@ -18,15 +18,11 @@ class CrawlUrl
 
     protected int $data_status = DataStatus::INIT;
 
-    protected array $data = [];
+    protected array|null $data_file = [];
 
     protected int $status = CrawlStatus::INIT;
 
-    protected function __construct(
-        protected SiteInterface $site,
-        public UriInterface     $url,
-        public ?UriInterface    $foundOnUrl = null
-    )
+    protected function __construct(protected SiteInterface $site, public UriInterface $url, public ?UriInterface $foundOnUrl = null)
     {
     }
 
@@ -40,7 +36,7 @@ class CrawlUrl
 
         $instance->status = $object->status;
         $instance->data_status = $object->data_status;
-        $instance->data = is_array($object->data) ? $object->data : json_decode($object->data);
+        $instance->data_file = is_array($object->data_file) ? $object->data_file : json_decode($object->data_file);
         $instance->visited = $object->visited;
 
         return $instance;
@@ -83,33 +79,24 @@ class CrawlUrl
         return $this->data_status;
     }
 
-    public function getData()
+    public function getDataFile()
     {
-        return $this->data;
+        return $this->data_file;
     }
 
-    public function setData(array $data)
+    public function setDataFile(array $data_file)
     {
-        $this->data = $data;
-        if(!empty($data)){
+        $this->data_file = $data_file;
+        if (!empty($data_file)) {
             $this->data_status = DataStatus::HAS_DATA;
-        }else{
+        } else {
             $this->data_status = DataStatus::NO_DATA;
         }
     }
 
     public function toArray()
     {
-        $data = [
-            'url' => $this->url,
-            'site' => $this->site,
-            'url_hash' => self::hashUrl($this->url),
-            'parent' => $this->foundOnUrl,
-            'status' => $this->status,
-            'data_status' => $this->data_status,
-            'data' => $this->data,
-            'visited' => $this->visited
-        ];
+        $data = ['url' => $this->url, 'site' => $this->site, 'url_hash' => self::hashUrl($this->url), 'parent' => $this->foundOnUrl, 'status' => $this->status, 'data_status' => $this->data_status, 'data_file' => $this->data_file, 'visited' => $this->visited];
 
         if ($this->id) {
             $data['id'] = $this->id;
@@ -118,15 +105,15 @@ class CrawlUrl
         return $data;
     }
 
-    public function saveDataInFile(array $data)
-    {
-        $storageFile = StorageFile::create('data');
-        $storageFile->put($data);
-    }
-
     public static function hashUrl(string $url, string $algo = 'sha256'): string
     {
         $url = preg_replace("/^(https?)?:\/\//", "", $url);
         return hash($algo, $url);
+    }
+
+    public function saveDataInFile(array $data)
+    {
+        $storageFile = StorageFile::create('data');
+        $storageFile->put($data);
     }
 }

@@ -100,14 +100,7 @@ class Crawler
         $urls = [];
         foreach ($urls_selector as $item) {
             $item = $item->getAttribute('href');
-
-            if (filter_var($item, FILTER_VALIDATE_URL) === FALSE) {
-                $array = explode('/', $site->rootUrl());
-                array_pop($array);
-                $item = implode('/', $array) . '/' . $item;
-            } else {
-                $item = PhpUri::parse($site)->join($item); //return full url include domain
-            }
+            $item = PhpUri::parse($site)->join($item); //return full url include domain
 
             $urls[] = $item;
         }

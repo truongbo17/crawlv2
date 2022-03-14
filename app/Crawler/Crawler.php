@@ -72,6 +72,7 @@ class Crawler
                     if (!$site->shouldCrawl($url)) {
                         continue;
                     }
+
                     $crawl_url = CrawlUrl::create($site, new Uri($url), $crawl_url->url); //new instance url
                     $this->queue->push($crawl_url); //push all url to database => pending url crawl
                 }
@@ -99,7 +100,15 @@ class Crawler
         $urls = [];
         foreach ($urls_selector as $item) {
             $item = $item->getAttribute('href');
-            $item = PhpUri::parse($site)->join($item); //return full url include domain
+
+            if (filter_var($item, FILTER_VALIDATE_URL) === FALSE) {
+                $array = explode('/', $site->rootUrl());
+                array_pop($array);
+                $item = implode('/', $array) . '/' . $item;
+            } else {
+                $item = PhpUri::parse($site)->join($item); //return full url include domain
+            }
+
             $urls[] = $item;
         }
 

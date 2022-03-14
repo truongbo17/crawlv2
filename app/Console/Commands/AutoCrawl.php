@@ -40,7 +40,9 @@ class AutoCrawl extends Command
     public function handle()
     {
         $crawler = new Crawler(new MySqlQueue());
-        $crawler->run('https://123job.vn');
+        //Chú ý về đường đẫn tương đối và đường dẫn tuyệt đối
+        //Nếu site sử dụng đường đẫn tương đối thì nên thêm một root url đầy đủ => https://www.scirp.org/journal/articles.aspx
+        $crawler->run('https://www.scirp.org/journal/articles.aspx');
 
         print "Success";
     }

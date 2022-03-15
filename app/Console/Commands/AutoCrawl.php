@@ -13,7 +13,9 @@ class AutoCrawl extends Command
      *
      * @var string
      */
-    protected $signature = 'crawl:auto';
+    protected $signature = 'crawl:auto
+    {--host= : host crawl}
+    ';
 
     /**
      * The console command description.
@@ -39,9 +41,15 @@ class AutoCrawl extends Command
      */
     public function handle()
     {
-        $crawler = new Crawler(new MySqlQueue());
-        $crawler->run('http://eprints.lse.ac.uk');
+        $host = $this->option('host');
+        if (empty($host)) {
+            print "Vui lòng chọn domain ! (php artisan crawl:auto --host=your_host) \n";
+            die;
+        }
 
-        print "Success";
+        $crawler = new Crawler(new MySqlQueue());
+        $crawler->run($host);
+
+        print "\n Success crawl !";
     }
 }

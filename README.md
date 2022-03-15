@@ -60,15 +60,9 @@ class Job123 extends SiteAbstract
 ```
 * Khai báo site trong App\Crawler\Sites\SiteManager.php
 
-### Step 3 : Chỉ định site muốn crawl
-
-```phpt
-$crawler->run('https://123job.vn');
-```
-* Site được chỉ định phải match với cả site được khai báo
-
-### Step 4 : Chạy crawl
+### Step 3 : Chạy crawl
 
 ```shell
-php artisan crawl:auto
+php artisan crawl:auto --host=yourhost
 ```
+* your_host phải match với site đã khai báo

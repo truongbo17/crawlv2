@@ -28,11 +28,11 @@ class Eprints extends SiteAbstract
     public function getInfoFromCrawler(DomCrawler $dom_crawler, string $url = '')
     {
         $title = $dom_crawler->filter('.ep_tm_pagetitle')->text();
-        $content = $dom_crawler->filter('.ep_summary_content_main > p')->last()->text();
+        $abstract = $dom_crawler->filter('.ep_summary_content_main > p')->last()->text();
         $author = $dom_crawler->filter('.ep_summary_content_main .person_name')->text();
         $downloadLink = ($dom_crawler->filter('a.ep_document_link')->count() > 0) ? $dom_crawler->filter('a.ep_document_link')->attr('href') : "";
 
-        return compact('title', 'content', 'author', 'downloadLink');
+        return compact('title', 'abstract', 'author', 'downloadLink');
     }
 
     public function configUrlCrawl(string $url, CrawlUrl $crawlUrl)

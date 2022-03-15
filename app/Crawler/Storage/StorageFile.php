@@ -8,12 +8,11 @@ use Carbon\Carbon;
 class StorageFile implements StorageInterface
 {
     private static object|null $storageFile = null;
-    private static string $disk;
-    private static string|null $fileName = null;
+    private string $disk;
 
     public function __construct(string $disk)
     {
-        self::$disk = $disk;
+        $this->disk = $disk;
     }
 
     public static function create(string $disk): object
@@ -28,35 +27,15 @@ class StorageFile implements StorageInterface
 
     public function put(array $data)
     {
-        if (self::$fileName === null) {
-            $this->init($data);
-        } else {
-            $this->append($data);
-        }
-
-        return ['disk' => self::$disk, 'path' => self::$fileName];
-    }
-
-    public function init($data)
-    {
-        self::$fileName = $this->createName();
         $data = [$data];
-        Storage::disk(self::$disk)->put(self::$fileName, json_encode($data));
+        Storage::disk($this->disk)->put($this->createName(), json_encode($data));
+
+        return ['disk' => $this->disk, 'path' => $this->createName()];
     }
 
     public function createName(): string
     {
         $time = Carbon::now();
-        return 'data-' . $time->format('d-m-y-H:i:s') . '.json';
-    }
-
-    public function append($data)
-    {
-        $string = Storage::disk(self::$disk)->get(self::$fileName);
-        $allData = json_decode($string, true);
-
-        array_push($allData, $data);
-
-        Storage::disk(self::$disk)->put(self::$fileName, json_encode($allData));
+        return md5('data-' . $time->format('d-m-y-H:i:s')) . '.json';
     }
 }

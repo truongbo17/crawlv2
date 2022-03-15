@@ -23,5 +23,5 @@ return [
         429, // Too Many Requests
         509, // Bandwidth Limit Exceeded (Apache)
     ],
-    'disk' => 'data'
+    'disk' => env('CRAWLER_DISK')
 ];

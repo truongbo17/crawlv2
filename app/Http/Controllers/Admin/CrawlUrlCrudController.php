@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Libs\TextReducer;
+use App\Crawler\Enum\DataStatus;
 use App\Models\CrawlUrl;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -46,18 +46,25 @@ class CrawlUrlCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        CRUD::column('id');
-        CRUD::column('site');
-
-        $this->crud->addColumn([
-            'name' => 'url',
-            'type' => 'closure',
-            'function' => function ($entry) {
-                return TextReducer::url($entry->url, 50);
-            }
+        $this->crud->addColumns([
+            [
+                'name' => 'id',
+                'type' => 'text'
+            ],
+            [
+                'name' => 'site',
+                'type' => 'url_reducer'
+            ],
+            [
+                'name' => 'url',
+                'type' => 'url_reducer',
+            ],
+            [
+                'name' => 'data_status',
+                'type' => 'select_from_array',
+                'options' => array_flip(DataStatus::asArray()),
+            ],
         ]);
-
-        CRUD::column('data_status');
 
         $this->crud->removeAllButtons();
     }

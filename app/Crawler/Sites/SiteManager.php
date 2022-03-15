@@ -11,6 +11,7 @@ use App\Crawler\Sites\Resource\ScripOrg;
 
 final class SiteManager
 {
+    //Site phải là URL gốc để tránh trường hợp xảy ra lỗi với đường dẫn tương đối
     protected static array $sites = [
         'https://123job.vn' => Job123::class,
         'https://journals.plos.org' => Journals::class,

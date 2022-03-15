@@ -22,7 +22,7 @@ class Eprints extends SiteAbstract
 
     public function shouldGetData(string $url)
     {
-        return preg_match("/^http:\/\/eprints\.lse\.ac\.uk\/[0-9]+\//", $url);
+        return preg_match("/^http:\/\/eprints\.lse\.ac\.uk\/[0-9]+\/$/", $url);
     }
 
     public function getInfoFromCrawler(DomCrawler $dom_crawler, string $url = '')

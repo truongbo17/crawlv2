@@ -98,12 +98,7 @@ class Crawler
     {
         $urls_selector = $dom_crawler->filter('a');
         $urls = [];
-        $checkMethod = false;
-
-        //Check 1 lần
-        if (method_exists($site, 'configUrlCrawl')) {
-            $checkMethod = true;
-        }
+        $checkMethod = method_exists($site, 'configUrlCrawl') ?? false; //check method 1 lan
 
         foreach ($urls_selector as $item) {
             $item = $item->getAttribute('href');

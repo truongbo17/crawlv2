@@ -21,7 +21,7 @@ class EprintsWhiterose extends SiteAbstract
 
     public function shouldGetData(string $url)
     {
-        return preg_match("/^https:\/\/eprints\.whiterose\.ac\.uk\/[0-9]+/", $url);
+        return preg_match("/^https:\/\/eprints\.whiterose\.ac\.uk\/[0-9]+\/$/", $url);
     }
 
     public function getInfoFromCrawler(DomCrawler $dom_crawler, string $url = '')

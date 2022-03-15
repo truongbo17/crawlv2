@@ -18,7 +18,7 @@ class CrawlUrl
 
     protected int $data_status = DataStatus::INIT;
 
-    protected array|null $data_file = [];
+    protected ?string $data_file = null;
 
     protected int $status = CrawlStatus::INIT;
 
@@ -36,7 +36,7 @@ class CrawlUrl
 
         $instance->status = $object->status;
         $instance->data_status = $object->data_status;
-        $instance->data_file = is_array($object->data_file) ? $object->data_file : json_decode($object->data_file);
+        $instance->data_file = $object->data_file ?? null;
         $instance->visited = $object->visited;
 
         return $instance;
@@ -51,16 +51,6 @@ class CrawlUrl
         }
 
         return $static;
-    }
-
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     public function getStatus()
@@ -84,7 +74,7 @@ class CrawlUrl
         return $this->data_file;
     }
 
-    public function setDataFile(array $data_file)
+    public function setDataFile(string $data_file)
     {
         $this->data_file = $data_file;
         if (!empty($data_file)) {
@@ -114,6 +104,16 @@ class CrawlUrl
     public function saveDataInFile(array $data)
     {
         $storageFile = StorageFile::create(config('crawler.disk'));
-        return $storageFile->put($data);
+        return $storageFile->put($data, $this->getId());
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        $this->id = $id;
     }
 }

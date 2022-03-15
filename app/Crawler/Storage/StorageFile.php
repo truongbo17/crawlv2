@@ -2,6 +2,8 @@
 
 namespace App\Crawler\Storage;
 
+use App\Libs\DiskPathTools\DiskPathInfo;
+use App\Libs\IdToPath;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
@@ -25,12 +27,15 @@ class StorageFile implements StorageInterface
         return self::$storageFile;
     }
 
-    public function put(array $data)
+    public function put(array $data, int $id): string
     {
         $data = [$data];
-        Storage::disk($this->disk)->put($this->createName(), json_encode($data));
 
-        return ['disk' => $this->disk, 'path' => $this->createName()];
+        $path = IdToPath::make($id, 'json');
+        $data_file = $this->disk . ":" . $path;
+
+        Storage::disk($this->disk)->put($path, json_encode($data));
+        return $data_file;
     }
 
     public function createName(): string

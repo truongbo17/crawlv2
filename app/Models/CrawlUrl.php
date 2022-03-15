@@ -11,8 +11,4 @@ class CrawlUrl extends Model
 
     protected $table = 'crawl_urls';
     protected $guarded = ['id'];
-
-    protected $casts = [
-        'data_file' => 'array',
-    ];
 }

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('url_hash')->index();
 
             $table->tinyInteger('data_status')->default(0)->index();
-            $table->json('data_file')->nullable();
+            $table->string('data_file')->nullable();
 
             $table->integer('status')->default(0)->index()->comment('See Enum\CrawlStatus class');
 

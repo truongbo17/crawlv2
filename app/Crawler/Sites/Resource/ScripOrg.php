@@ -32,8 +32,8 @@ class ScripOrg extends SiteAbstract
         $abstract = $dom_crawler->filter('div.articles_main')->filter('div')->eq(3)->filter('p')->eq(1)->text();
 
         //download link
-        $downloadLink = $dom_crawler->filter('div.articles_main')->filter('div')->eq(2)->filter('a')->eq(1)->attr('href');
-        $downloadLink = $this->downloadLink($downloadLink);
+        $downloadLink = $dom_crawler->filter('span#JournalInfor_showDOI ~ a')->attr('href');
+        $downloadLink = "https:" . $downloadLink; //complete missing url
 
         //keyword
         $keyword = $dom_crawler->filter('div#JournalInfor_div_showkeywords')->text();
@@ -55,11 +55,6 @@ class ScripOrg extends SiteAbstract
         $authorName = $this->authorName;
 
         return compact('title', 'abstract', 'downloadLink', 'keyword', 'authorName');
-    }
-
-    public function downloadLink(string $downloadLink): string
-    {
-        return PhpUri::parse($this->rootUrl())->join($downloadLink);
     }
 
     public function keyword(string $keyword)

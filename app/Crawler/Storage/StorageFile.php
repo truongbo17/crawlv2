@@ -4,8 +4,6 @@ namespace App\Crawler\Storage;
 
 use App\Libs\DiskPathTools\DiskPathInfo;
 use App\Libs\IdToPath;
-use Illuminate\Support\Facades\Storage;
-use Carbon\Carbon;
 
 class StorageFile implements StorageInterface
 {

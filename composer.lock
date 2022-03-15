@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f365bf0439dc0ac510b459c3bf64764b",
+    "content-hash": "ea439b9b648193dcfbd17840ed089ead",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -215,6 +215,70 @@
                 "source": "https://github.com/Laravel-Backpack/FileManager/tree/1.1.7"
             },
             "time": "2022-02-04T12:17:35+00:00"
+        },
+        {
+            "name": "backpack/logmanager",
+            "version": "v4.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Laravel-Backpack/LogManager.git",
+                "reference": "d9553f0e6750598850844258177c46b4e597fae9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Laravel-Backpack/LogManager/zipball/d9553f0e6750598850844258177c46b4e597fae9",
+                "reference": "d9553f0e6750598850844258177c46b4e597fae9",
+                "shasum": ""
+            },
+            "require": {
+                "backpack/crud": "^4.1|^5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0||^7.0",
+                "scrutinizer/ocular": "~1.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Backpack\\LogManager\\LogManagerServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Backpack\\LogManager\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Cristian Tabacitu",
+                    "email": "tabacitu@backpackforlaravel.com",
+                    "homepage": "https://backpackforlaravel.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "An interface to preview, download and delete Laravel log files.",
+            "homepage": "https://github.com/laravel-backpack/LogManager",
+            "keywords": [
+                "backpack",
+                "laravel",
+                "log interface",
+                "log manager",
+                "logs"
+            ],
+            "support": {
+                "issues": "https://github.com/Laravel-Backpack/LogManager/issues",
+                "source": "https://github.com/Laravel-Backpack/LogManager/tree/v4.0.6"
+            },
+            "time": "2022-02-04T12:16:00+00:00"
         },
         {
             "name": "barryvdh/elfinder-flysystem-driver",
@@ -7372,6 +7436,43 @@
                 "source": "https://github.com/Laravel-Backpack/Generators/tree/v3.1.13"
             },
             "time": "2022-02-28T11:33:07+00:00"
+        },
+        {
+            "name": "deployer/dist",
+            "version": "v6.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/deployphp/distribution.git",
+                "reference": "857158fa5466d5135ce87f07fe67779b6b6a13d2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/deployphp/distribution/zipball/857158fa5466d5135ce87f07fe67779b6b6a13d2",
+                "reference": "857158fa5466d5135ce87f07fe67779b6b6a13d2",
+                "shasum": ""
+            },
+            "bin": [
+                "dep"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anton Medvedev",
+                    "email": "anton@medv.io"
+                }
+            ],
+            "description": "Deployer Phar Distribution",
+            "homepage": "https://deployer.org",
+            "support": {
+                "docs": "https://deployer.org/docs",
+                "issues": "https://github.com/deployphp/deployer/issues",
+                "source": "https://github.com/deployphp/deployer"
+            },
+            "time": "2020-04-25T18:48:50+00:00"
         },
         {
             "name": "doctrine/instantiator",

@@ -1,26 +1,9 @@
 <!DOCTYPE html>
 <html lang="{{ app()->getLocale() }}">
     <head>
-        <meta charset="utf-8">
-        <title>elFinder 2.0</title>
-
-        <!-- jQuery and jQuery UI (REQUIRED) -->
-        <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/smoothness/jquery-ui.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
-        <!-- elFinder CSS (REQUIRED) -->
-        <link rel="stylesheet" type="text/css" href="{{ asset($dir . '/css/elfinder.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset($dir . '/css/theme.css') }}">
-
-        <!-- elFinder JS (REQUIRED) -->
-        <script src="{{ asset($dir . '/js/elfinder.min.js') }}"></script>
-
-        @if($locale)
-            <!-- elFinder translation (OPTIONAL) -->
-            <script src="{{ asset($dir . "/js/i18n/elfinder.$locale.js") }}"></script>
-        @endif
-        <!-- Include jQuery, jQuery UI, elFinder (REQUIRED) -->
+        
+        @include('vendor.elfinder.common_scripts')
+        @include('vendor.elfinder.common_styles')
 
         <script type="text/javascript">
             $().ready(function () {
@@ -36,13 +19,20 @@
                     soundPath: '{{ asset($dir.'/sounds') }}',
                     dialog: {width: 900, modal: true, title: 'Select a file'},
                     resizable: false,
+                    onlyMimes: @json(unserialize(urldecode(request('mimes')))),
                     commandsOptions: {
                         getfile: {
+                            multiple: {{ request('multiple') ? 'true' : 'false' }},
                             oncomplete: 'destroy'
                         }
                     },
                     getFileCallback: function (file) {
-                        window.parent.processSelectedFile(file.path, '{{ $input_id  }}');
+                        @if (request()->has('multiple') && request()->input('multiple') == 1)
+                            window.parent.processSelectedMultipleFiles(file, '{{ $input_id  }}');
+                        @else
+                            window.parent.processSelectedFile(file.path, '{{ $input_id  }}');
+                        @endif
+
                         parent.jQuery.colorbox.close();
                     }
                 }).elfinder('instance');

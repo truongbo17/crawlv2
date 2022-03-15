@@ -40,7 +40,7 @@ class AutoCrawl extends Command
     public function handle()
     {
         $crawler = new Crawler(new MySqlQueue());
-        $crawler->run('https://www.scirp.org/journal/articles.aspx');
+        $crawler->run('http://eprints.lse.ac.uk');
 
         print "Success";
     }

@@ -14,9 +14,9 @@ final class SiteManager
     protected static array $sites = [
         'https://123job.vn' => Job123::class,
         'https://journals.plos.org' => Journals::class,
-        'https://www.scirp.org/journal/articles.aspx' => ScripOrg::class,
-        'http://eprints.lse.ac.uk/view/year/' => Eprints::class,
-        'https://eprints.whiterose.ac.uk/view/year/' => EprintsWhiterose::class,
+        'https://www.scirp.org' => ScripOrg::class,
+        'http://eprints.lse.ac.uk' => Eprints::class,
+        'https://eprints.whiterose.ac.uk' => EprintsWhiterose::class,
         ];
 
     /**

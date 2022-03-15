@@ -6,9 +6,7 @@ use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
 abstract class SiteAbstract implements SiteInterface
 {
-    public function __construct(
-        public string $root_url
-    )
+    public function __construct(public string $root_url)
     {
     }
 

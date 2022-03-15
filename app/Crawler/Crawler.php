@@ -66,10 +66,10 @@ class Crawler
                 $crawl_url->setStatus(CrawlStatus::DONE); //set status for instance
                 $this->queue->changeProcessStatus($crawl_url, $crawl_url->getStatus()); //set status in database
 
-                $urls = $this->getAllUrl($site, $dom_crawler); //get all url of dom url current
+                $urls = $this->getAllUrl($site, $dom_crawler, $crawl_url); //get all url of dom url current
 
                 foreach ($urls as $url) {
-                    if (!$site->shouldCrawl($url)) {
+                    if (!$site->shouldCrawl($url) && !$site->shouldGetData($url)) {
                         continue;
                     }
 
@@ -94,13 +94,18 @@ class Crawler
         }
     }
 
-    public function getAllUrl(SiteInterface $site, DomCrawler $dom_crawler)
+    public function getAllUrl(SiteInterface $site, DomCrawler $dom_crawler, CrawlUrl $crawlUrl)
     {
         $urls_selector = $dom_crawler->filter('a');
         $urls = [];
         foreach ($urls_selector as $item) {
             $item = $item->getAttribute('href');
-            $item = PhpUri::parse($site)->join($item); //return full url include domain
+
+            if (method_exists($site, 'configUrlCrawl')) {
+                $item = $site->configUrlCrawl($item, $crawlUrl);
+            } else {
+                $item = PhpUri::parse($site)->join($item); //return full url include domain
+            }
 
             $urls[] = $item;
         }

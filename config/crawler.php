@@ -22,5 +22,6 @@ return [
         408, // Request Timeout
         429, // Too Many Requests
         509, // Bandwidth Limit Exceeded (Apache)
-    ]
+    ],
+    'disk' => 'data'
 ];

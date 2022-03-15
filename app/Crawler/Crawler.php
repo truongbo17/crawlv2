@@ -2,7 +2,7 @@
 
 namespace App\Crawler;
 
-use App\Crawler\Browsers\Gluzze;
+use App\Crawler\Browsers\Guzzle;
 use App\Crawler\Enum\CrawlStatus;
 use App\Crawler\Queue\QueueInterface;
 use App\Crawler\Sites\SiteInterface;
@@ -40,7 +40,7 @@ class Crawler
             try {
                 $mytime = Carbon::now();
                 CliEcho::infonl("Goto [$crawl_url->url] - Time : " . $mytime->toDateTimeString());
-                $html = (new Gluzze())->getHtml($crawl_url->url); //get html using gluzze
+                $html = (new Guzzle())->getHtml($crawl_url->url); //get html using gluzze
             } catch (GuzzleException $exception) {
                 CliEcho::errornl($exception->getMessage());
                 if (in_array($exception->getCode(), config('crawler.should_retry_status_codes'))) {

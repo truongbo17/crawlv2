@@ -44,6 +44,7 @@ return [
 
         'data' => [
             'driver' => 'local',
+//            'root' => '/home/truongbo/Downloads',
             'root' => storage_path('app/public/data'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',

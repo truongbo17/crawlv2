@@ -103,6 +103,8 @@ class Crawler
         foreach ($urls_selector as $item) {
             $item = $item->getAttribute('href');
 
+            $item = preg_replace("/(#\w+)$/", '', $item); //delete fragment #tag
+
             if ($checkMethod) {
                 $item = $site->configUrlCrawl($item, $crawlUrl);
             } else {

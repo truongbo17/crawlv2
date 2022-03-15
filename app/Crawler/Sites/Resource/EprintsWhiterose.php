@@ -39,7 +39,7 @@ class EprintsWhiterose extends SiteAbstract
 
     public function configUrlCrawl(string $url, CrawlUrl $crawlUrl)
     {
-        if ($url == './' || preg_match("/\#group/", $url)) {
+        if ($url == './') {
             return false;
         }
 

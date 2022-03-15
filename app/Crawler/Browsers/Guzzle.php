@@ -4,7 +4,7 @@ namespace App\Crawler\Browsers;
 
 use GuzzleHttp\Client;
 
-class Gluzze implements BrowserInterface{
+class Guzzle implements BrowserInterface{
     protected Client $client;
 
     public function __construct()

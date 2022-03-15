@@ -2,7 +2,6 @@
 
 namespace App\Crawler\Sites\Resource;
 
-use App\Crawler\Browsers\Gluzze;
 use App\Crawler\Sites\SiteAbstract;
 use App\Libs\PhpUri;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;

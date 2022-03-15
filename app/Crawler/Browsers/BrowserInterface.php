@@ -4,10 +4,9 @@ namespace App\Crawler\Browsers;
 
 interface BrowserInterface{
     /**
-     * get html
+     * Get Html
      * @param string $url
-     *
-     * return mixed
-     * */
+     * @return mixed
+     */
     public function getHtml(string $url);
 }

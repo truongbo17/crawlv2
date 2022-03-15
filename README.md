@@ -3,11 +3,12 @@
 ## Description
 
 * Xây dựng theo <a href="https://gitlab.com/giahao9899/any_crawl_2021">giahao9899/any_crawl_2021</a>
-* Note :  
-  * Thu thập dữ liệu từ tất cả các website.
-  * Khi truy cập vào một url sẽ lấy tất cả những url phù hợp với điều kiện trong config site . Các url sẽ chạy đến khi không còn url nào phù hợp với điều kiện nữa
-  * Thu thập dữ liệu theo điều kiện trong config site  
-  
+* Note :
+    * Thu thập dữ liệu từ tất cả các website.
+    * Khi truy cập vào một url sẽ lấy tất cả những url phù hợp với điều kiện trong config site . Các url sẽ chạy đến khi
+      không còn url nào phù hợp với điều kiện nữa
+    * Thu thập dữ liệu theo điều kiện trong config site
+
 ## Usage
 
 ### Step 1 : Tạo config site
@@ -44,11 +45,12 @@ class Job123 extends SiteAbstract
     }
 }
 ```
+
 * Tạo config site trong App\Crawler\Sites\Resource
-  * startUrls() : trả về mảng các url trong lần đầu tiên chạy
-  * shouldCrawl() : định nghĩa thế nào là url cần truy cập vào
-  * shouldGetData() : định nghĩa thế nào là url cần lấy dữ liệu
-  * getInfoFromCrawler() : định nghĩa cách lấy dữ liệu
+    * startUrls() : trả về mảng các url trong lần đầu tiên chạy
+    * shouldCrawl() : định nghĩa thế nào là url cần truy cập vào
+    * shouldGetData() : định nghĩa thế nào là url cần lấy dữ liệu
+    * getInfoFromCrawler() : định nghĩa cách lấy dữ liệu
 
 ### Step 2 : Khai báo Site
 
@@ -58,6 +60,7 @@ class Job123 extends SiteAbstract
         'https://journals.plos.org/plosone/browse?page=2' => Journals::class,
  ];
 ```
+
 * Khai báo site trong App\Crawler\Sites\SiteManager.php
 
 ### Step 3 : Chạy crawl
@@ -65,4 +68,7 @@ class Job123 extends SiteAbstract
 ```shell
 php artisan crawl:auto --host=yourhost
 ```
+
 * your_host phải match với site đã khai báo
+
+#### Config disk,browsers,status trong config/crawler.php

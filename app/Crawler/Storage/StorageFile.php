@@ -32,15 +32,10 @@ class StorageFile implements StorageInterface
         $data = [$data];
 
         $path = IdToPath::make($id, 'json');
-        $data_file = $this->disk . ":" . $path;
+        $data_file = new DiskPathInfo($this->disk, $path);
+        $data_file->put(json_encode($data));
 
-        Storage::disk($this->disk)->put($path, json_encode($data));
+//        Storage::disk($this->disk)->put($path, json_encode($data));
         return $data_file;
-    }
-
-    public function createName(): string
-    {
-        $time = Carbon::now();
-        return md5('data-' . $time->format('d-m-y-H:i:s')) . '.json';
     }
 }

@@ -7,20 +7,20 @@ use InvalidArgumentException;
 use Storage;
 
 class DiskPathInfo {
-    
+
     public const INFO_SEPARATE = ':';
     public const ARRAY_SEPARATE = ',';
-    
+
     protected array $disks = [];
-    
+
     protected string $path;
-    
+
     protected int $size = 0;
-    
+
     protected array $other_info = [];
-    
+
     protected array $disks_priority = [];
-    
+
     /**
      * @param string $string
      * @param string|null $file_name
@@ -36,17 +36,17 @@ class DiskPathInfo {
         if($file_name) {
             $name_length = config('filesystems.name_length');
             $options['name'] = FilenameSanitizer::make_safe_file_name($file_name, $name_length);
-            
+
         }
         $infos = explode( self::INFO_SEPARATE, $string);
-        
+
         $disks = explode( self::ARRAY_SEPARATE, array_shift($infos) );
         $path  = array_shift( $infos );
         $size  = intval(array_shift( $infos ));
-        
+
         return new DiskPathInfo( $disks, $path, $size, $options);
     }
-    
+
     /**
      * DiskPathInfo constructor.
      * @param array|string $disks
@@ -61,14 +61,14 @@ class DiskPathInfo {
         if (!is_array($disks)) {
             $disks = explode(self::ARRAY_SEPARATE, $disks);
         }
-        
+
         $this->disks = $disks;
         $this->path  = $path;
         $this->size  = $size;
-        
+
         $this->info($other_info);
     }
-    
+
     /**
      * Get or Set info
      *
@@ -98,7 +98,7 @@ class DiskPathInfo {
     public function url() {
         return Storage::disk($this->bestDisk())->url($this->path());
     }
-    
+
     /**
      * @param \DateTimeInterface|null $expiration
      * @param array $options
@@ -112,7 +112,7 @@ class DiskPathInfo {
         return Storage::disk($this->bestDisk())
             ->temporaryUrl($this->path(), $expiration, $options);
     }
-    
+
     /**
      * Get disks
      * @return mixed
@@ -121,7 +121,7 @@ class DiskPathInfo {
     {
         return $this->disks;
     }
-    
+
     /**
      * Get the best disk name
      * @return mixed
@@ -130,7 +130,7 @@ class DiskPathInfo {
     {
         return $this->disks()[0];
     }
-    
+
     /**
      * Check has disks
      * @param mixed ...$disks
@@ -144,7 +144,7 @@ class DiskPathInfo {
         }
         return true;
     }
-    
+
     /**
      * @param array $disks
      * @param bool $check
@@ -157,7 +157,7 @@ class DiskPathInfo {
         if ($replace) {
             $this->disks = [];
         }
-        
+
         if ($check) {
             foreach ($disks as $disk) {
                 if (!$this->hasDisk($disk)
@@ -182,7 +182,7 @@ class DiskPathInfo {
             $this->disks = $disks;
         }
     }
-    
+
     /**
      * Get path
      * @return string
@@ -204,7 +204,7 @@ class DiskPathInfo {
         }
         return Storage::disk($this->bestDisk())->get($this->path);
     }
-    
+
     /**
      * Read content
      * @param bool $steam
@@ -214,7 +214,7 @@ class DiskPathInfo {
     public function read(bool $steam = false) {
         return $this->file($steam);
     }
-    
+
     /**
      * Write the contents of a file.
      * @param  string|resource  $contents
@@ -225,11 +225,11 @@ class DiskPathInfo {
     {
         $saved = Storage::disk($this->bestDisk())->put($this->path, $contents, $options);
         if (!$saved) return false;
-        
+
         $this->size(true);
         return true;
     }
-    
+
     /**
      * Delete the file
      *
@@ -239,7 +239,7 @@ class DiskPathInfo {
     {
         return Storage::disk($this->bestDisk())->delete($this->path);
     }
-    
+
     /**
      * Determine if a file exists.
      *
@@ -249,7 +249,7 @@ class DiskPathInfo {
     {
         return Storage::disk($this->bestDisk())->exists($this->path);
     }
-    
+
     /**
      * Get size
      *
@@ -264,14 +264,14 @@ class DiskPathInfo {
         }
         return $this->size;
     }
-    
+
     public function __toString()
     {
         $data['disks'] = implode(self::ARRAY_SEPARATE, $this->disks);
         $data['path'] = $this->path;
         $data['size'] = $this->size;
-        
+
         return implode(self::INFO_SEPARATE, $data);
     }
-    
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Crawler\Sites\Resource;
 
+use App\Crawler\CrawlUrl;
 use App\Crawler\Sites\SiteAbstract;
 use Symfony\Component\DomCrawler\Crawler as DomCrawler;
 
@@ -34,5 +35,22 @@ class EprintsWhiterose extends SiteAbstract
         $downloadLink = ($dom_crawler->filter('p.filename > a')->count() > 0) ? $dom_crawler->filter('p.filename > a    ')->attr('href') : "";
 
         return compact('title', 'content', 'author', 'downloadLink');
+    }
+
+    public function configUrlCrawl(string $url, CrawlUrl $crawlUrl)
+    {
+        if ($url == './' || preg_match("/\#group/", $url)) {
+            return false;
+        }
+
+        if (substr($url, 0, 1) == '/') {
+            $url = $this->rootUrl() . $url;
+        } else if (filter_var($url, FILTER_VALIDATE_URL) === FALSE) {
+            $array = explode('/', $crawlUrl->url);
+            array_pop($array);
+            $url = implode('/', $array) . '/' . $url;
+        }
+
+        return $url;
     }
 }

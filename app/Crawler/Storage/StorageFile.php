@@ -27,13 +27,10 @@ class StorageFile implements StorageInterface
 
     public function put(array $data, int $id): string
     {
-        $data = [$data];
-
         $path = IdToPath::make($id, 'json');
         $data_file = new DiskPathInfo($this->disk, $path);
         $data_file->put(json_encode($data));
 
-//        Storage::disk($this->disk)->put($path, json_encode($data));
         return $data_file;
     }
 }

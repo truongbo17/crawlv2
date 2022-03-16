@@ -5,6 +5,7 @@ namespace App\Crawler\Queue;
 use App\Crawler\CrawlUrl;
 use App\Crawler\Enum\CrawlStatus;
 use DB;
+use Doctrine\DBAL\Query\QueryException;
 use Illuminate\Support\Arr;
 
 class MySqlQueue implements QueueInterface
@@ -101,9 +102,13 @@ class MySqlQueue implements QueueInterface
             $data['data_file'] = json_encode($crawlUrl->getDataFile());
         }
 
-        DB::table($this->table)
-            ->where('id', $crawlUrl->getId())
-            ->update($data);
+        try {
+            DB::table($this->table)
+                ->where('id', $crawlUrl->getId())
+                ->update($data);
+        } catch (QueryException $exception) {
+        }
+
     }
 
     public function delay(CrawlUrl $crawlUrl)

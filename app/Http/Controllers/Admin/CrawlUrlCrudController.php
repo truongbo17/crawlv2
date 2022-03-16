@@ -66,6 +66,38 @@ class CrawlUrlCrudController extends CrudController
             ],
         ]);
 
-        $this->crud->removeAllButtons();
+        $this->crud->removeButtons(['create', 'update', 'delete']);
+    }
+
+    protected function setupShowOperation()
+    {
+        $this->crud->removeButtons(['update', 'delete']);
+
+        $this->crud->addColumns([
+            [
+                'name' => 'id',
+                'label' => 'ID'
+            ],
+            [
+                'name' => 'site',
+                'label' => 'Site',
+                'type' => 'url_reducer'
+            ],
+            ['name' => 'url',
+                'label' => 'URL',
+                'type' => 'url_reducer'
+            ],
+            [
+                'name' => 'data_status',
+                'label' => 'Data Status',
+                'type' => 'select_from_array',
+                'options' => array_flip(DataStatus::asArray()),
+            ],
+            [
+                'name' => 'data_file',
+                'label' => 'Data',
+                'type' => 'convert_data'
+            ],
+        ]);
     }
 }

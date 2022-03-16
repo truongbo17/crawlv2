@@ -8,5 +8,13 @@
 @endphp
 
 @foreach(@$contents as $key => $content)
-    <p>{{$key}} : {{$content}}</p><br/>
+    @if(is_array($content))
+        {{$key}} :
+        @foreach($content as $contentChild)
+            <p>{{$contentChild}}</p>
+        @endforeach
+    @else
+        <p>{{$key}} : {{$content}}</p><br/>
+    @endif
+    <hr/>
 @endforeach
